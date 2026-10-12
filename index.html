@@ -2,509 +2,257 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0d1b2a">
-<title>Grow Your Rights — Gamifikasi Hak & Kewajiban</title>
+<title>Grow Your Rights — Gamifikasi Hak &amp; Kewajiban</title>
 <style>
-* {
-  margin: 0; padding: 0; box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;width:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#050a10;}
+body{display:flex;align-items:center;justify-content:center;}
+
+#phone{
+  position:relative;width:100%;max-width:420px;
+  height:100vh;height:100dvh;max-height:900px;
+  background:#0d1b2a;overflow:hidden;color:#fff;
+  display:flex;flex-direction:column;
 }
-html, body {
-  height: 100%; width: 100%;
-  overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: #050a10;
-}
-body {
-  display: flex; align-items: center; justify-content: center;
+@media(min-width:500px){
+  #phone{border-radius:28px;box-shadow:0 24px 70px rgba(0,0,0,.7),0 0 0 10px #141414,0 0 0 12px #2a2a2a;}
 }
 
-#phone {
-  position: relative;
-  width: 100%;
-  max-width: 420px;
-  height: 100vh;      /* fallback untuk browser lama */
-  height: 100dvh;     /* modern */
-  height: -webkit-fill-available;
-  max-height: 900px;
-  background: #0d1b2a;
-  overflow: hidden;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
+/* ===== SCREENS ===== */
+.screen{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  display:none;flex-direction:column;background:#0d1b2a;z-index:1;
 }
-@media (min-width: 500px) {
-  #phone {
-    border-radius: 28px;
-    box-shadow: 0 24px 70px rgba(0,0,0,0.7), 0 0 0 10px #141414, 0 0 0 12px #2a2a2a;
-  }
+.screen.active{display:flex;}
+.screen.overlay{
+  background:rgba(5,12,20,.92);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  z-index:50;justify-content:center;align-items:center;padding:24px;
 }
 
-.screen {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  display: none;
-  flex-direction: column;
-  background: #0d1b2a;
-  z-index: 1;
+/* ===== TOMBOL ===== */
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:15px 20px;border:none;border-radius:14px;
+  font-size:15px;font-weight:700;font-family:inherit;
+  cursor:pointer;touch-action:manipulation;
+  transition:transform .12s ease,box-shadow .12s ease,filter .12s ease;
+  position:relative;z-index:5;
+  -webkit-user-select:none;user-select:none;
 }
-.screen.active { display: flex; }
-.screen.overlay {
-  background: rgba(5, 12, 20, 0.92);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  z-index: 50;
-  justify-content: center;
-  align-items: center;
-  padding: 24px;
+.btn:active{transform:scale(.96);filter:brightness(.92);}
+.btn.primary{
+  background:linear-gradient(135deg,#4caf50,#2e7d32);
+  color:#fff;box-shadow:0 8px 24px rgba(76,175,80,.35);
 }
-
-/* ====== HOME ====== */
-#screen-home {
-  background: radial-gradient(circle at 50% 25%, #1a4028 0%, #0d1b2a 60%);
-  padding: 24px;
-  align-items: center;
-  justify-content: flex-start;
-  text-align: center;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-.home-inner {
-  width: 100%;
-  max-width: 340px;
-  margin: auto 0; /* trik agar center tapi tetap bisa scroll */
-}
-.logo {
-  font-size: 72px;
-  line-height: 1;
-  margin-bottom: 8px;
-  filter: drop-shadow(0 8px 24px rgba(95,184,79,0.6));
-}
-h1 {
-  font-size: 26px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  background: linear-gradient(135deg, #7ddc6a, #3fa6ff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: #7ddc6a;
-  margin-bottom: 6px;
-}
-.subtitle {
-  font-size: 13px;
-  color: #8fa8bd;
-  line-height: 1.5;
-  margin-bottom: 20px;
-}
-.info-card {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 16px;
-  padding: 14px 16px;
-  margin-bottom: 14px;
-  text-align: left;
-  font-size: 12.5px;
-  line-height: 1.55;
-  color: #c8d6e2;
-}
-.info-card .hint {
-  color: #ffb340;
-  margin-top: 8px;
-  font-weight: 600;
-  font-size: 12px;
-}
-.btn {
-  display: block;
-  width: 100%;
-  padding: 15px 20px;
-  border: none;
-  border-radius: 14px;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  font-family: inherit;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.2s;
-  margin-top: 10px;
-  position: relative;
-  z-index: 2;
-  pointer-events: auto;
-}
-.btn:active { transform: scale(0.97); }
-.btn.primary {
-  background: linear-gradient(135deg, #4caf50, #2e7d32);
-  color: #fff;
-  box-shadow: 0 8px 24px rgba(76, 175, 80, 0.35);
-}
-.btn.ghost {
-  background: rgba(255,255,255,0.06);
-  color: #9bb0c4;
-  border: 1px solid rgba(255,255,255,0.1);
-  font-size: 13px;
-  padding: 11px 20px;
-}
-.stats {
-  display: flex;
-  gap: 10px;
-  margin-top: 18px;
-}
-.stat {
-  flex: 1;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 14px;
-  padding: 12px 8px;
-}
-.stat-val {
-  font-size: 24px;
-  font-weight: 800;
-  color: #7ddc6a;
-  line-height: 1.1;
-}
-.stat-lbl {
-  font-size: 10px;
-  color: #8fa8bd;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-top: 4px;
+.btn.ghost{
+  background:rgba(255,255,255,.06);color:#9bb0c4;
+  border:1px solid rgba(255,255,255,.1);
+  font-size:13px;padding:11px 20px;
 }
 
-/* ====== MATERI ====== */
-#screen-material {
-  background: #0d1b2a;
-  overflow-y: auto;
+/* ===== HOME ===== */
+#screen-home{
+  background:radial-gradient(circle at 50% 25%,#1a4028 0%,#0d1b2a 60%);
+  padding:24px;align-items:center;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;
 }
-.material-header {
-  padding: 24px 22px 16px;
-  background: linear-gradient(160deg, #1a4028, #0d1b2a);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  position: sticky;
-  top: 0;
-  z-index: 2;
+#screen-home.active{display:flex;}
+.home-inner{width:100%;max-width:340px;margin:auto;text-align:center;}
+.logo{font-size:72px;line-height:1;margin-bottom:8px;filter:drop-shadow(0 8px 24px rgba(95,184,79,.6));}
+h1{
+  font-size:26px;font-weight:800;letter-spacing:-.5px;
+  background:linear-gradient(135deg,#7ddc6a,#3fa6ff);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:#7ddc6a;
+  margin-bottom:6px;
 }
-.material-header h2 {
-  font-size: 20px;
-  font-weight: 800;
-  color: #fff;
-  margin-bottom: 4px;
+.subtitle{font-size:13px;color:#8fa8bd;line-height:1.5;margin-bottom:20px;}
+.info-card{
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;padding:14px 16px;margin-bottom:14px;
+  text-align:left;font-size:12.5px;line-height:1.55;color:#c8d6e2;
 }
-.material-header p { font-size: 12px; color: #8fa8bd; }
-.material-body { padding: 18px 22px 30px; }
-.section-title {
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #7ddc6a;
-  margin: 18px 0 8px;
-}
-.section-title:first-child { margin-top: 0; }
-.material-body p {
-  font-size: 13.5px;
-  line-height: 1.65;
-  color: #c8d6e2;
-  margin-bottom: 10px;
-}
-.material-body ul { list-style: none; padding: 0; }
-.material-body li {
-  font-size: 13px;
-  line-height: 1.55;
-  color: #c8d6e2;
-  padding: 8px 12px;
-  background: rgba(255,255,255,0.04);
-  border-radius: 10px;
-  margin-bottom: 6px;
-  border-left: 3px solid #4caf50;
-}
-.material-body li b { color: #fff; }
-.material-body li.violate { border-left-color: #ff5252; }
-.material-footer { padding: 16px 22px 28px; background: #0d1b2a; }
+.info-card .hint{color:#ffb340;margin-top:8px;font-weight:600;font-size:12px;}
+.stats{display:flex;gap:10px;margin-top:18px;}
+.stat{flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px 8px;}
+.stat-val{font-size:24px;font-weight:800;color:#7ddc6a;line-height:1.1;}
+.stat-lbl{font-size:10px;color:#8fa8bd;text-transform:uppercase;letter-spacing:.5px;margin-top:4px;}
 
-/* ====== QUIZ ====== */
-#screen-quiz { background: #0d1b2a; }
-.quiz-hud {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  padding: 14px 18px 10px;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  pointer-events: none;
+/* ===== MATERI (footer selalu kelihatan) ===== */
+#screen-material{background:#0d1b2a;overflow:hidden;}
+#screen-material.active{display:flex;flex-direction:column;}
+.material-header{
+  flex:0 0 auto;padding:22px 22px 14px;
+  background:linear-gradient(160deg,#1a4028,#0d1b2a);
+  border-bottom:1px solid rgba(255,255,255,.06);
 }
-.hud-badge {
-  background: rgba(13, 27, 42, 0.75);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 10px;
-  padding: 6px 12px;
-  font-size: 12px;
-  font-weight: 700;
-  color: #7ddc6a;
-  white-space: nowrap;
+.material-header h2{font-size:20px;font-weight:800;color:#fff;margin-bottom:4px;}
+.material-header p{font-size:12px;color:#8fa8bd;}
+.material-body{
+  flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  padding:18px 22px 20px;
 }
-.hud-bar {
-  flex: 1;
-  height: 6px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 3px;
-  overflow: hidden;
+.section-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#7ddc6a;margin:18px 0 8px;}
+.section-title:first-child{margin-top:0;}
+.material-body p{font-size:13.5px;line-height:1.65;color:#c8d6e2;margin-bottom:10px;}
+.material-body ul{list-style:none;padding:0;}
+.material-body li{
+  font-size:13px;line-height:1.55;color:#c8d6e2;
+  padding:8px 12px;background:rgba(255,255,255,.04);
+  border-radius:10px;margin-bottom:6px;border-left:3px solid #4caf50;
 }
-.hud-bar-fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #4caf50, #7ddc6a);
-  border-radius: 3px;
-  transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-#canvas-container {
-  flex: 0 0 42%;
-  min-height: 200px;
-  position: relative;
-  background: radial-gradient(circle at 50% 40%, #1e3a2a 0%, #0a1a12 80%);
-  overflow: hidden;
-}
-#canvas-container canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-.ground-glow {
-  position: absolute;
-  bottom: -30px; left: 50%;
-  transform: translateX(-50%);
-  width: 260px; height: 100px;
-  background: radial-gradient(ellipse, rgba(125,220,106,0.18), transparent 70%);
-  pointer-events: none;
-  filter: blur(10px);
-}
-.question-wrap {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background: #f4f7fa;
-  border-radius: 24px 24px 0 0;
-  box-shadow: 0 -10px 40px rgba(0,0,0,0.4);
-  overflow: hidden;
-  position: relative;
-  z-index: 5;
-}
-.question-scroll {
-  flex: 1;
-  overflow-y: auto;
-  padding: 18px 18px 20px;
-  -webkit-overflow-scrolling: touch;
-}
-.case-box {
-  background: #fff5e6;
-  border-left: 4px solid #ffb340;
-  border-radius: 10px;
-  padding: 10px 12px;
-  margin-bottom: 12px;
-}
-.case-box .case-label {
-  font-size: 10px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #d18a00;
-  margin-bottom: 4px;
-}
-.case-box .case-text {
-  font-size: 12.5px;
-  line-height: 1.5;
-  color: #4a3a1a;
-  font-style: italic;
-}
-.question-text {
-  font-size: 14.5px;
-  font-weight: 700;
-  color: #0d1b2a;
-  line-height: 1.45;
-  margin-bottom: 14px;
-}
-.options { display: flex; flex-direction: column; gap: 8px; }
-.option {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  width: 100%;
-  padding: 12px 13px;
-  background: #fff;
-  border: 1.5px solid #dde5ec;
-  border-radius: 12px;
-  font-family: inherit;
-  font-size: 13px;
-  line-height: 1.4;
-  color: #24384a;
-  text-align: left;
-  cursor: pointer;
-  transition: all 0.18s ease;
-}
-.option:active:not(:disabled) {
-  transform: scale(0.985);
-  border-color: #4caf50;
-}
-.option .opt-letter {
-  flex: 0 0 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: #eef2f6;
-  color: #5a7085;
-  font-size: 11px;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.option.correct {
-  background: #e8f8ec;
-  border-color: #4caf50;
-  color: #1b5e20;
-}
-.option.correct .opt-letter { background: #4caf50; color: #fff; }
-.option.wrong {
-  background: #fdeaea;
-  border-color: #ff5252;
-  color: #b71c1c;
-}
-.option.wrong .opt-letter { background: #ff5252; color: #fff; }
-.option:disabled { cursor: default; opacity: 0.9; }
-.explain-box {
-  margin-top: 12px;
-  padding: 11px 13px;
-  background: #e8f4ff;
-  border-radius: 10px;
-  font-size: 12px;
-  line-height: 1.55;
-  color: #1e4d73;
-  border-left: 4px solid #3fa6ff;
-  display: none;
-}
-.explain-box.show { display: block; }
-
-/* ====== BADGE ====== */
-.badge-card {
-  background: linear-gradient(160deg, #1a2c3d, #0d1b2a);
-  border: 1px solid rgba(125,220,106,0.3);
-  border-radius: 24px;
-  padding: 30px 22px 24px;
-  text-align: center;
-  max-width: 340px;
-  width: 100%;
-  box-shadow: 0 0 60px rgba(76, 175, 80, 0.35);
-}
-.badge-visual {
-  position: relative;
-  width: 140px; height: 140px;
-  margin: 0 auto 18px;
-}
-.badge-circle {
-  width: 100%; height: 100%;
-  border-radius: 50%;
-  background: conic-gradient(from 0deg, #ffd54f, #ff8a65, #ffd54f, #7ddc6a, #ffd54f);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 40px rgba(255, 213, 79, 0.5);
-}
-.badge-circle-inner {
-  width: 116px; height: 116px;
-  border-radius: 50%;
-  background: linear-gradient(160deg, #1a2c3d, #0d1b2a);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 60px;
-}
-.badge-title {
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #ffd54f;
-  font-weight: 800;
-  margin-bottom: 6px;
-}
-.badge-name {
-  font-size: 22px;
-  font-weight: 800;
-  color: #fff;
-  margin-bottom: 8px;
-  line-height: 1.2;
-}
-.badge-desc {
-  font-size: 12.5px;
-  line-height: 1.55;
-  color: #9bb0c4;
-  margin-bottom: 18px;
-}
-.badge-stats { display: flex; gap: 8px; margin-bottom: 18px; }
-.badge-stat {
-  flex: 1;
-  background: rgba(255,255,255,0.05);
-  border-radius: 12px;
-  padding: 10px 6px;
-}
-.badge-stat-val { font-size: 20px; font-weight: 800; color: #7ddc6a; }
-.badge-stat-lbl {
-  font-size: 9.5px;
-  color: #8fa8bd;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-top: 2px;
+.material-body li b{color:#fff;}
+.material-body li.violate{border-left-color:#ff5252;}
+.material-footer{
+  flex:0 0 auto;padding:14px 22px calc(16px + env(safe-area-inset-bottom, 0px));
+  background:#0d1b2a;border-top:1px solid rgba(255,255,255,.08);
+  box-shadow:0 -8px 24px rgba(0,0,0,.35);
 }
 
-/* ====== TOAST ====== */
-#toast {
-  position: absolute;
-  top: 70px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-20px);
-  padding: 10px 18px;
-  border-radius: 12px;
-  font-size: 12.5px;
-  font-weight: 700;
-  z-index: 100;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.35s ease;
-  white-space: nowrap;
-  max-width: 90%;
+/* ===== QUIZ ===== */
+#screen-quiz{background:#0d1b2a;}
+.quiz-hud{
+  position:absolute;top:0;left:0;right:0;
+  padding:14px 18px 10px;z-index:10;
+  display:flex;align-items:center;gap:12px;pointer-events:none;
 }
-#toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
+.hud-badge{
+  background:rgba(13,27,42,.75);border:1px solid rgba(255,255,255,.1);
+  border-radius:10px;padding:6px 12px;font-size:12px;font-weight:700;
+  color:#7ddc6a;white-space:nowrap;
 }
-#toast.success { background: linear-gradient(135deg, #4caf50, #2e7d32); color: #fff; }
-#toast.error { background: linear-gradient(135deg, #ff5252, #c62828); color: #fff; }
-#toast.info { background: rgba(30, 60, 90, 0.95); color: #cfe4ff; }
+.hud-bar{flex:1;height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden;}
+.hud-bar-fill{height:100%;width:0%;background:linear-gradient(90deg,#4caf50,#7ddc6a);border-radius:3px;transition:width .6s cubic-bezier(.34,1.56,.64,1);}
+#canvas-container{
+  flex:0 0 42%;min-height:180px;position:relative;
+  background:radial-gradient(circle at 50% 40%,#1e3a2a 0%,#0a1a12 80%);
+  overflow:hidden;
+}
+#canvas-container canvas{display:block;width:100%;height:100%;}
+#fallback-plant{
+  position:absolute;inset:0;display:none;
+  align-items:flex-end;justify-content:center;padding-bottom:8px;
+}
+#fallback-plant.show{display:flex;}
+#fallback-plant .plant-emoji{
+  font-size:110px;line-height:1;
+  filter:drop-shadow(0 8px 24px rgba(125,220,106,.4));
+  transition:transform .5s cubic-bezier(.34,1.56,.64,1);
+}
+.ground-glow{
+  position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);
+  width:260px;height:100px;
+  background:radial-gradient(ellipse,rgba(125,220,106,.18),transparent 70%);
+  pointer-events:none;filter:blur(10px);
+}
+.question-wrap{
+  flex:1;display:flex;flex-direction:column;
+  background:#f4f7fa;border-radius:24px 24px 0 0;
+  box-shadow:0 -10px 40px rgba(0,0,0,.4);
+  overflow:hidden;position:relative;z-index:5;
+}
+.question-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:18px 18px 20px;}
+.case-box{background:#fff5e6;border-left:4px solid #ffb340;border-radius:10px;padding:10px 12px;margin-bottom:12px;}
+.case-box .case-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#d18a00;margin-bottom:4px;}
+.case-box .case-text{font-size:12.5px;line-height:1.5;color:#4a3a1a;font-style:italic;}
+.question-text{font-size:14.5px;font-weight:700;color:#0d1b2a;line-height:1.45;margin-bottom:14px;}
+.options{display:flex;flex-direction:column;gap:8px;}
+.option{
+  display:flex;align-items:flex-start;gap:10px;width:100%;
+  padding:12px 13px;background:#fff;border:1.5px solid #dde5ec;
+  border-radius:12px;font-family:inherit;font-size:13px;line-height:1.4;
+  color:#24384a;text-align:left;cursor:pointer;touch-action:manipulation;
+  transition:all .18s ease;
+}
+.option:active:not(:disabled){transform:scale(.985);border-color:#4caf50;}
+.option .opt-letter{
+  flex:0 0 22px;height:22px;border-radius:50%;
+  background:#eef2f6;color:#5a7085;font-size:11px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+}
+.option.correct{background:#e8f8ec;border-color:#4caf50;color:#1b5e20;}
+.option.correct .opt-letter{background:#4caf50;color:#fff;}
+.option.wrong{background:#fdeaea;border-color:#ff5252;color:#b71c1c;}
+.option.wrong .opt-letter{background:#ff5252;color:#fff;}
+.option:disabled{cursor:default;opacity:.9;}
+.explain-box{
+  margin-top:12px;padding:11px 13px;background:#e8f4ff;border-radius:10px;
+  font-size:12px;line-height:1.55;color:#1e4d73;border-left:4px solid #3fa6ff;
+  display:none;
+}
+.explain-box.show{display:block;}
 
-/* ====== ERROR BANNER ====== */
-#err-banner {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  background: #c62828;
-  color: #fff;
-  padding: 10px 14px;
-  font-size: 11px;
-  font-family: monospace;
-  z-index: 999;
-  display: none;
-  max-height: 120px;
-  overflow-y: auto;
-  line-height: 1.4;
+/* ===== BADGE ===== */
+.badge-card{
+  background:linear-gradient(160deg,#1a2c3d,#0d1b2a);
+  border:1px solid rgba(125,220,106,.3);border-radius:24px;
+  padding:30px 22px 24px;text-align:center;max-width:340px;width:100%;
+  box-shadow:0 0 60px rgba(76,175,80,.35);
 }
-#err-banner.show { display: block; }
+.badge-visual{position:relative;width:140px;height:140px;margin:0 auto 18px;}
+.badge-circle{
+  width:100%;height:100%;border-radius:50%;
+  background:conic-gradient(from 0deg,#ffd54f,#ff8a65,#ffd54f,#7ddc6a,#ffd54f);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 40px rgba(255,213,79,.5);
+}
+.badge-circle-inner{
+  width:116px;height:116px;border-radius:50%;
+  background:linear-gradient(160deg,#1a2c3d,#0d1b2a);
+  display:flex;align-items:center;justify-content:center;font-size:60px;
+}
+.badge-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#ffd54f;font-weight:800;margin-bottom:6px;}
+.badge-name{font-size:22px;font-weight:800;color:#fff;margin-bottom:8px;line-height:1.2;}
+.badge-desc{font-size:12.5px;line-height:1.55;color:#9bb0c4;margin-bottom:18px;}
+.badge-stats{display:flex;gap:8px;margin-bottom:18px;}
+.badge-stat{flex:1;background:rgba(255,255,255,.05);border-radius:12px;padding:10px 6px;}
+.badge-stat-val{font-size:20px;font-weight:800;color:#7ddc6a;}
+.badge-stat-lbl{font-size:9.5px;color:#8fa8bd;text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
 
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-thumb { background: rgba(125,220,106,0.3); border-radius: 4px; }
+/* ===== TOAST ===== */
+#toast{
+  position:absolute;top:70px;left:50%;
+  transform:translateX(-50%) translateY(-20px);
+  padding:10px 18px;border-radius:12px;font-size:12.5px;font-weight:700;
+  z-index:100;opacity:0;pointer-events:none;
+  transition:all .35s ease;white-space:nowrap;max-width:90%;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+#toast.success{background:linear-gradient(135deg,#4caf50,#2e7d32);color:#fff;}
+#toast.error{background:linear-gradient(135deg,#ff5252,#c62828);color:#fff;}
+#toast.info{background:rgba(30,60,90,.95);color:#cfe4ff;}
+
+/* ===== DEBUG LOG ===== */
+#debug-log{
+  position:absolute;bottom:0;left:0;right:0;
+  background:rgba(0,0,0,.85);color:#7ddc6a;
+  font-family:monospace;font-size:10px;
+  padding:4px 8px;z-index:200;
+  max-height:70px;overflow-y:auto;
+  display:none;line-height:1.35;
+}
+#debug-log.show{display:block;}
+#debug-toggle{
+  position:absolute;top:6px;right:8px;z-index:201;
+  background:rgba(0,0,0,.6);color:#7ddc6a;
+  border:1px solid rgba(125,220,106,.3);
+  border-radius:6px;padding:3px 8px;font-size:10px;
+  cursor:pointer;font-family:monospace;
+}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:rgba(125,220,106,.3);border-radius:4px;}
 </style>
 </head>
 <body>
 
 <div id="phone">
+  <button id="debug-toggle" title="Show/hide log">log</button>
+  <div id="debug-log"></div>
 
-  <!-- HOME -->
+  <!-- ================= HOME ================= -->
   <div class="screen active" id="screen-home">
     <div class="home-inner">
       <div class="logo">🌱</div>
@@ -517,14 +265,14 @@ h1 {
         <div class="hint">⚠️ Jawaban SALAH = tanaman TIDAK tumbuh. Kamu harus mengulang soal itu!</div>
       </div>
 
-      <button class="btn primary" id="btn-start" onclick="window.__goMaterial && window.__goMaterial()">🌿 Mulai Petualangan</button>
-      <button class="btn ghost" id="btn-reset" onclick="window.__resetProgress && window.__resetProgress()">🗑️ Reset Progress</button>
+      <button type="button" class="btn primary" id="btn-start">🌿 Mulai Petualangan</button>
+      <button type="button" class="btn ghost" id="btn-reset">🗑️ Reset Progress</button>
 
       <div class="stats" id="home-stats"></div>
     </div>
   </div>
 
-  <!-- MATERI -->
+  <!-- ================= MATERI ================= -->
   <div class="screen" id="screen-material">
     <div class="material-header">
       <h2>📖 Materi Singkat</h2>
@@ -532,7 +280,7 @@ h1 {
     </div>
     <div class="material-body">
       <div class="section-title">A. Hak Warga Negara</div>
-      <p>Hak adalah sesuatu yang mutlak menjadi milik kita dan penggunaannya tergantung pada diri kita sendiri. Hak warga negara dijamin dalam UUD NRI Tahun 1945.</p>
+      <p>Hak adalah sesuatu yang mutlak menjadi milik kita. Hak warga negara dijamin dalam UUD NRI Tahun 1945.</p>
       <ul>
         <li><b>Hak atas pendidikan</b> — Pasal 31 ayat (1)</li>
         <li><b>Hak atas pekerjaan &amp; penghidupan layak</b> — Pasal 27 ayat (2)</li>
@@ -570,11 +318,11 @@ h1 {
       </ul>
     </div>
     <div class="material-footer">
-      <button class="btn primary" id="btn-to-quiz" onclick="window.__startGame && window.__startGame()">✅ Saya Paham, Mulai Kuis!</button>
+      <button type="button" class="btn primary" id="btn-to-quiz">✅ Saya Paham, Mulai Kuis!</button>
     </div>
   </div>
 
-  <!-- QUIZ -->
+  <!-- ================= QUIZ ================= -->
   <div class="screen" id="screen-quiz">
     <div class="quiz-hud">
       <div class="hud-badge" id="q-progress">Soal 1 / 10</div>
@@ -583,6 +331,9 @@ h1 {
 
     <div id="canvas-container">
       <div class="ground-glow"></div>
+      <div id="fallback-plant">
+        <div class="plant-emoji" id="fallback-emoji">🌱</div>
+      </div>
     </div>
 
     <div class="question-wrap">
@@ -598,7 +349,7 @@ h1 {
     </div>
   </div>
 
-  <!-- BADGE -->
+  <!-- ================= BADGE ================= -->
   <div class="screen overlay" id="screen-badge">
     <div class="badge-card">
       <div class="badge-visual">
@@ -623,662 +374,594 @@ h1 {
           <div class="badge-stat-lbl">Total Badge</div>
         </div>
       </div>
-      <button class="btn primary" id="btn-home" onclick="window.__goHome && window.__goHome()">🏠 Kembali ke Beranda</button>
+      <button type="button" class="btn primary" id="btn-home">🏠 Kembali ke Beranda</button>
     </div>
   </div>
 
-  <!-- TOAST -->
   <div id="toast"></div>
-
-  <!-- ERROR -->
-  <div id="err-banner"></div>
 </div>
 
-<!-- Library WebGL — kalau gagal, kuis tetap jalan (tanaman pakai fallback 2D) -->
+<!-- WebGL Library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <script>
 /* =========================================================
-   GROW YOUR RIGHTS
+   GROW YOUR RIGHTS — versi robust
    ========================================================= */
+(function() {
+'use strict';
 
-// Tampilkan error di layar supaya kelihatan
-window.addEventListener('error', function(e) {
-  const banner = document.getElementById('err-banner');
-  if (!banner) return;
-  banner.classList.add('show');
-  banner.textContent = '⚠️ Error: ' + (e.message || 'unknown') + ' (' + (e.filename || '') + ':' + (e.lineno || '') + ')';
-  console.error('JS Error:', e);
-});
+/* ===== DEBUG ===== */
+var debugEl, debugVisible = false;
+function log(msg) {
+  console.log('[GYR] ' + msg);
+  if (debugEl) {
+    var line = document.createElement('div');
+    line.textContent = '> ' + msg;
+    debugEl.appendChild(line);
+    debugEl.scrollTop = debugEl.scrollHeight;
+    if (debugEl.childNodes.length > 40) debugEl.removeChild(debugEl.firstChild);
+  }
+}
 
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('[GYR] DOM siap, memulai inisialisasi...');
+/* ===== SAFE HELPER ===== */
+function safe(fn, name) {
+  try { fn(); }
+  catch (e) {
+    log('ERR ' + name + ': ' + e.message);
+    console.error('[GYR]', name, e);
+  }
+}
 
-  /* ============ STORAGE ============ */
-  const STORAGE_KEY = 'grow_your_rights_v1';
-  const DEFAULT_DATA = {
-    badges: [],
-    plantsGrown: 0,
-    totalCorrect: 0,
-    totalWrong: 0,
-    history: []
-  };
+var $ = function(id) { return document.getElementById(id); };
 
-  let userData = loadData();
+/* ===== STATE ===== */
+var STORAGE_KEY = 'grow_your_rights_v1';
+var DEFAULT_DATA = { badges: [], plantsGrown: 0, totalCorrect: 0, totalWrong: 0, history: [] };
+var userData = null;
+var currentQ = 0, stage = 0, wrongAttempts = 0, locked = false, gameActive = false;
+var threeReady = false;
+var THREE_OK = (typeof THREE !== 'undefined');
 
-  function loadData() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return JSON.parse(JSON.stringify(DEFAULT_DATA));
-      const parsed = JSON.parse(raw);
-      return Object.assign({}, JSON.parse(JSON.stringify(DEFAULT_DATA)), parsed);
-    } catch (e) {
-      console.warn('Gagal load data:', e);
-      return JSON.parse(JSON.stringify(DEFAULT_DATA));
-    }
+/* ===== STORAGE ===== */
+function loadData() {
+  try {
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return JSON.parse(JSON.stringify(DEFAULT_DATA));
+    var p = JSON.parse(raw);
+    var out = JSON.parse(JSON.stringify(DEFAULT_DATA));
+    for (var k in p) if (p.hasOwnProperty(k)) out[k] = p[k];
+    return out;
+  } catch(e) {
+    log('loadData err: ' + e.message);
+    return JSON.parse(JSON.stringify(DEFAULT_DATA));
+  }
+}
+function saveData() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(userData)); }
+  catch(e) { log('saveData err: ' + e.message); }
+}
+
+/* ===== SOAL ===== */
+var QUESTIONS = [
+  { case:'Seorang siswa SMA tidak diizinkan mengikuti ujian akhir karena orang tuanya belum membayar SPP selama 2 bulan.',
+    q:'Hak warga negara apa yang DILANGGAR dalam kasus tersebut?',
+    options:['Hak atas pekerjaan yang layak','Hak atas pendidikan','Hak untuk memeluk agama','Hak atas kebebasan berserikat'],
+    answer:1, explain:'Pasal 31 ayat (1) UUD NRI 1945 menjamin hak setiap warga negara untuk mendapat pendidikan.' },
+  { case:'Sebuah pabrik membuang limbah cair ke sungai tanpa diolah, sehingga warga sekitar kehilangan akses air bersih.',
+    q:'Pelanggaran hak apa yang terjadi dalam kasus ini?',
+    options:['Hak atas lingkungan hidup yang sehat','Hak untuk berpendapat','Hak untuk memilih','Hak atas privasi'],
+    answer:0, explain:'Pasal 28H ayat (1) UUD NRI 1945 menjamin hak atas lingkungan hidup yang baik dan sehat.' },
+  { case:'Pak Budi seorang pengusaha berpenghasilan besar, namun ia sengaja tidak melaporkan dan tidak membayar pajaknya setiap tahun.',
+    q:'Tindakan Pak Budi merupakan bentuk...',
+    options:['Pelanggaran hak asasi manusia','Pengingkaran kewajiban sebagai warga negara','Pelaksanaan hak demokrasi','Pemenuhan hak konstitusional'],
+    answer:1, explain:'Pasal 23A UUD NRI 1945 menyatakan pajak adalah kewajiban warga negara.' },
+  { case:'Seorang anak berusia 15 tahun dipaksa bekerja di pabrik selama 12 jam setiap hari dan tidak diberi upah yang layak.',
+    q:'Hak apa yang paling utama DILANGGAR dalam kasus ini?',
+    options:['Hak atas kebebasan beragama','Hak anak atas perlindungan dan pendidikan','Hak untuk mengikuti pemilu','Hak atas kepemilikan pribadi'],
+    answer:1, explain:'UU No. 35 Tahun 2014 tentang Perlindungan Anak menjamin hak anak atas perlindungan dari eksploitasi.' },
+  { case:'Rina tidak pernah ikut kerja bakti di lingkungannya, tidak membayar iuran sampah, dan sering membuang sampah sembarangan.',
+    q:'Sikap Rina merupakan contoh dari...',
+    options:['Pelaksanaan hak warga negara','Pengingkaran kewajiban sosial masyarakat','Pengamalan Pancasila sila ke-2','Pemenuhan hak asasi manusia'],
+    answer:1, explain:'Kerja bakti, membayar iuran, dan menjaga kebersihan adalah kewajiban sosial warga.' },
+  { case:'Seorang pejabat publik memberikan layanan kepada warga berdasarkan suku, agama, dan golongan tertentu saja.',
+    q:'Hak warga negara apa yang DILANGGAR dalam kasus tersebut?',
+    options:['Hak atas kesetaraan di hadapan hukum','Hak untuk memiliki properti','Hak untuk memilih presiden','Hak atas kebebasan pers'],
+    answer:0, explain:'Pasal 27 ayat (1) UUD NRI 1945 menjamin kesetaraan kedudukan warga negara di hadapan hukum.' },
+  { case:'Andi menyebarkan berita bohong (hoaks) di media sosial yang membuat tetangganya difitnah dan dikucilkan warga.',
+    q:'Tindakan Andi melanggar hak orang lain, yaitu...',
+    options:['Hak untuk mendapatkan informasi yang benar dan nama baik','Hak untuk memeluk agama','Hak untuk berkumpul','Hak atas pekerjaan'],
+    answer:0, explain:'Pasal 28G ayat (1) UUD NRI 1945 menjamin hak atas perlindungan diri pribadi, kehormatan, dan nama baik.' },
+  { case:'Seorang pengendara motor tidak memakai helm, menerobos lampu merah, dan mengabaikan rambu lalu lintas.',
+    q:'Tindakan tersebut merupakan bentuk pengingkaran kewajiban terhadap...',
+    options:['Tuhan Yang Maha Esa','Aturan hukum lalu lintas sebagai warga negara','Keluarga sendiri','Hak anak-anak'],
+    answer:1, explain:'Mematuhi hukum (Pasal 27 ayat (1)) dan peraturan lalu lintas adalah kewajiban warga negara.' },
+  { case:'Sebuah perusahaan mempekerjakan karyawan tanpa jaminan kesehatan, tanpa kontrak, dan tidak membayar upah selama 3 bulan.',
+    q:'Hak karyawan yang DILANGGAR dalam kasus tersebut adalah...',
+    options:['Hak atas pekerjaan dan penghidupan yang layak','Hak untuk memilih agama','Hak atas pendidikan tinggi','Hak untuk mendirikan partai'],
+    answer:0, explain:'Pasal 27 ayat (2) UUD NRI 1945 menjamin hak atas pekerjaan dan penghidupan yang layak.' },
+  { case:'Seorang warga negara aktif menggunakan hak pilihnya dan membayar pajak tepat waktu. Namun ia juga rajin menyebarkan ujaran kebencian terhadap kelompok tertentu.',
+    q:'Analisis yang PALING tepat mengenai warga tersebut adalah...',
+    options:['Ia sudah melaksanakan semua hak dan kewajiban sebagai warga negara','Ia melaksanakan sebagian hak dan kewajiban, namun masih mengingkari kewajiban menghormati hak orang lain','Ia hanya melanggar kewajiban pajak','Ia belum memiliki kesadaran hukum sama sekali'],
+    answer:1, explain:'Warga negara harus menyeimbangkan hak dan kewajiban. Menyebar ujaran kebencian melanggar hak orang lain (Pasal 28J ayat 1).' }
+];
+
+/* ===== UI ===== */
+function showScreen(id) {
+  var screens = document.querySelectorAll('.screen');
+  for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
+  var el = $(id);
+  if (el) el.classList.add('active');
+  log('screen->' + id);
+}
+function showToast(msg, type) {
+  type = type || 'info';
+  var t = $('toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.className = 'show ' + type;
+  clearTimeout(t._timer);
+  t._timer = setTimeout(function(){ t.className = ''; }, 1800);
+}
+
+/* ===== THREE.JS ===== */
+var scene, camera, renderer, plantGroup;
+var stem, leaves = [], flower, fruit;
+var stemTargetH = 0.1, animT = 0, shakeUntil = 0;
+var MAX_STEM = 1.7, NLEAF = 7;
+
+function initThree() {
+  if (!THREE_OK) { log('THREE tidak ada -> fallback 2D'); return false; }
+  var container = $('canvas-container');
+  if (!container) return false;
+  var w = container.clientWidth || 360, h = container.clientHeight || 220;
+
+  scene = new THREE.Scene();
+  scene.fog = new THREE.Fog(0x0a1a12, 7, 18);
+  camera = new THREE.PerspectiveCamera(45, w/h, 0.1, 100);
+  camera.position.set(0, 2.3, 6.2);
+  camera.lookAt(0, 1.5, 0);
+
+  renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+  renderer.setSize(w, h);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  container.appendChild(renderer.domElement);
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+  var d = new THREE.DirectionalLight(0xfff5e0, 0.95); d.position.set(3,6,4); scene.add(d);
+  var r = new THREE.DirectionalLight(0x88ccff, 0.45); r.position.set(-4,3,-3); scene.add(r);
+  var b = new THREE.PointLight(0x7ddc6a, 0.5, 8); b.position.set(0,0.5,2); scene.add(b);
+
+  buildPlant();
+  window.addEventListener('resize', onResize);
+  animate();
+  log('Three.js OK');
+  return true;
+}
+
+function buildPlant() {
+  plantGroup = new THREE.Group();
+  plantGroup.position.y = -0.55;
+
+  var potMat = new THREE.MeshStandardMaterial({ color:0xc47a3a, roughness:0.85 });
+  var pot = new THREE.Mesh(new THREE.CylinderGeometry(0.72,0.52,0.9,32), potMat);
+  pot.position.y = 0.45; plantGroup.add(pot);
+
+  var rimMat = new THREE.MeshStandardMaterial({ color:0xa8622a, roughness:0.85 });
+  var rim = new THREE.Mesh(new THREE.CylinderGeometry(0.76,0.76,0.13,32), rimMat);
+  rim.position.y = 0.88; plantGroup.add(rim);
+
+  var soilMat = new THREE.MeshStandardMaterial({ color:0x3a2418, roughness:1 });
+  var soil = new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,0.1,32), soilMat);
+  soil.position.y = 0.96; plantGroup.add(soil);
+
+  var stemMat = new THREE.MeshStandardMaterial({ color:0x4a9b3f, roughness:0.65 });
+  var stemGeo = new THREE.CylinderGeometry(0.05,0.08,1,10);
+  stemGeo.translate(0,0.5,0);
+  stem = new THREE.Mesh(stemGeo, stemMat);
+  stem.position.y = 1.02; stem.scale.y = 0.1;
+  plantGroup.add(stem);
+
+  for (var i = 0; i < NLEAF; i++) {
+    var lf = createLeaf();
+    lf.visible = false;
+    lf.userData = { targetScale:0, currentScale:0 };
+    lf.scale.setScalar(0.001);
+    lf.rotation.y = i * 137.5 * Math.PI / 180;
+    lf.rotation.z = -0.25;
+    plantGroup.add(lf);
+    leaves.push(lf);
   }
 
-  function saveData() {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
-    } catch (e) {
-      console.warn('Gagal simpan data:', e);
-    }
+  flower = createFlower();
+  flower.visible = false;
+  flower.userData = { targetScale:0, currentScale:0 };
+  flower.scale.setScalar(0.001);
+  plantGroup.add(flower);
+
+  fruit = createFruit();
+  fruit.visible = false;
+  fruit.userData = { targetScale:0, currentScale:0 };
+  fruit.scale.setScalar(0.001);
+  plantGroup.add(fruit);
+
+  scene.add(plantGroup);
+}
+
+function createLeaf() {
+  var g = new THREE.Group();
+  var mat = new THREE.MeshStandardMaterial({ color:0x5fb84f, roughness:0.55, side:THREE.DoubleSide });
+  var leaf = new THREE.Mesh(new THREE.SphereGeometry(0.25,10,7), mat);
+  leaf.scale.set(1.6,0.13,0.8); leaf.position.x = 0.36; g.add(leaf);
+  var vm = new THREE.MeshStandardMaterial({ color:0x3d8c33 });
+  var v = new THREE.Mesh(new THREE.CylinderGeometry(0.012,0.012,0.62,5), vm);
+  v.rotation.z = Math.PI/2; v.position.set(0.36,0.015,0); g.add(v);
+  return g;
+}
+function createFlower() {
+  var g = new THREE.Group();
+  var pm = new THREE.MeshStandardMaterial({ color:0xff6b9d, roughness:0.45, emissive:0x661133, emissiveIntensity:0.35 });
+  for (var i = 0; i < 8; i++) {
+    var p = new THREE.Mesh(new THREE.SphereGeometry(0.2,9,7), pm);
+    p.scale.set(1,0.32,0.62);
+    var a = (i/8)*Math.PI*2;
+    p.position.set(Math.cos(a)*0.22,0,Math.sin(a)*0.22);
+    p.rotation.y = -a; g.add(p);
   }
+  var cm = new THREE.MeshStandardMaterial({ color:0xffd54f, emissive:0xaa7700, emissiveIntensity:0.7 });
+  g.add(new THREE.Mesh(new THREE.SphereGeometry(0.12,14,14), cm));
+  var gm = new THREE.MeshBasicMaterial({ color:0xffd54f, transparent:true, opacity:0.18 });
+  g.add(new THREE.Mesh(new THREE.SphereGeometry(0.35,16,16), gm));
+  return g;
+}
+function createFruit() {
+  var g = new THREE.Group();
+  var mat = new THREE.MeshStandardMaterial({ color:0xff3b30, roughness:0.35, emissive:0x550000, emissiveIntensity:0.25 });
+  var body = new THREE.Mesh(new THREE.SphereGeometry(0.21,18,18), mat);
+  body.scale.y = 1.08; g.add(body);
+  var hm = new THREE.MeshBasicMaterial({ color:0xffffff, transparent:true, opacity:0.35 });
+  var h = new THREE.Mesh(new THREE.SphereGeometry(0.06,8,8), hm);
+  h.position.set(-0.07,0.09,0.12); g.add(h);
+  var lm = new THREE.MeshStandardMaterial({ color:0x4a9b3f, side:THREE.DoubleSide });
+  var lf = new THREE.Mesh(new THREE.SphereGeometry(0.09,8,6), lm);
+  lf.scale.set(1.6,0.18,0.7); lf.position.y = 0.22; g.add(lf);
+  return g;
+}
 
-  /* ============ BANK SOAL ============ */
-  const QUESTIONS = [
-    {
-      case: 'Seorang siswa SMA tidak diizinkan mengikuti ujian akhir karena orang tuanya belum membayar SPP selama 2 bulan.',
-      q: 'Hak warga negara apa yang DILANGGAR dalam kasus tersebut?',
-      options: ['Hak atas pekerjaan yang layak','Hak atas pendidikan','Hak untuk memeluk agama','Hak atas kebebasan berserikat'],
-      answer: 1,
-      explain: 'Pasal 31 ayat (1) UUD NRI 1945 menjamin hak setiap warga negara untuk mendapat pendidikan.'
-    },
-    {
-      case: 'Sebuah pabrik membuang limbah cair ke sungai tanpa diolah, sehingga warga sekitar kehilangan akses air bersih.',
-      q: 'Pelanggaran hak apa yang terjadi dalam kasus ini?',
-      options: ['Hak atas lingkungan hidup yang sehat','Hak untuk berpendapat','Hak untuk memilih','Hak atas privasi'],
-      answer: 0,
-      explain: 'Pasal 28H ayat (1) UUD NRI 1945 menjamin hak atas lingkungan hidup yang baik dan sehat.'
-    },
-    {
-      case: 'Pak Budi seorang pengusaha berpenghasilan besar, namun ia sengaja tidak melaporkan dan tidak membayar pajaknya setiap tahun.',
-      q: 'Tindakan Pak Budi merupakan bentuk...',
-      options: ['Pelanggaran hak asasi manusia','Pengingkaran kewajiban sebagai warga negara','Pelaksanaan hak demokrasi','Pemenuhan hak konstitusional'],
-      answer: 1,
-      explain: 'Pasal 23A UUD NRI 1945 menyatakan pajak adalah kewajiban warga negara.'
-    },
-    {
-      case: 'Seorang anak berusia 15 tahun dipaksa bekerja di pabrik selama 12 jam setiap hari dan tidak diberi upah yang layak.',
-      q: 'Hak apa yang paling utama DILANGGAR dalam kasus ini?',
-      options: ['Hak atas kebebasan beragama','Hak anak atas perlindungan dan pendidikan','Hak untuk mengikuti pemilu','Hak atas kepemilikan pribadi'],
-      answer: 1,
-      explain: 'UU No. 35 Tahun 2014 tentang Perlindungan Anak menjamin hak anak atas perlindungan dari eksploitasi.'
-    },
-    {
-      case: 'Rina tidak pernah ikut kerja bakti di lingkungannya, tidak membayar iuran sampah, dan sering membuang sampah sembarangan.',
-      q: 'Sikap Rina merupakan contoh dari...',
-      options: ['Pelaksanaan hak warga negara','Pengingkaran kewajiban sosial masyarakat','Pengamalan Pancasila sila ke-2','Pemenuhan hak asasi manusia'],
-      answer: 1,
-      explain: 'Kerja bakti, membayar iuran, dan menjaga kebersihan adalah kewajiban sosial warga.'
-    },
-    {
-      case: 'Seorang pejabat publik memberikan layanan kepada warga berdasarkan suku, agama, dan golongan tertentu saja.',
-      q: 'Hak warga negara apa yang DILANGGAR dalam kasus tersebut?',
-      options: ['Hak atas kesetaraan di hadapan hukum','Hak untuk memiliki properti','Hak untuk memilih presiden','Hak atas kebebasan pers'],
-      answer: 0,
-      explain: 'Pasal 27 ayat (1) UUD NRI 1945 menjamin kesetaraan kedudukan warga negara di hadapan hukum.'
-    },
-    {
-      case: 'Andi menyebarkan berita bohong (hoaks) di media sosial yang membuat tetangganya difitnah dan dikucilkan warga.',
-      q: 'Tindakan Andi melanggar hak orang lain, yaitu...',
-      options: ['Hak untuk mendapatkan informasi yang benar dan nama baik','Hak untuk memeluk agama','Hak untuk berkumpul','Hak atas pekerjaan'],
-      answer: 0,
-      explain: 'Pasal 28G ayat (1) UUD NRI 1945 menjamin hak atas perlindungan diri pribadi, kehormatan, dan nama baik.'
-    },
-    {
-      case: 'Seorang pengendara motor tidak memakai helm, menerobos lampu merah, dan mengabaikan rambu lalu lintas.',
-      q: 'Tindakan tersebut merupakan bentuk pengingkaran kewajiban terhadap...',
-      options: ['Tuhan Yang Maha Esa','Aturan hukum lalu lintas sebagai warga negara','Keluarga sendiri','Hak anak-anak'],
-      answer: 1,
-      explain: 'Mematuhi hukum (Pasal 27 ayat (1)) dan peraturan lalu lintas adalah kewajiban warga negara.'
-    },
-    {
-      case: 'Sebuah perusahaan mempekerjakan karyawan tanpa jaminan kesehatan, tanpa kontrak, dan tidak membayar upah selama 3 bulan.',
-      q: 'Hak karyawan yang DILANGGAR dalam kasus tersebut adalah...',
-      options: ['Hak atas pekerjaan dan penghidupan yang layak','Hak untuk memilih agama','Hak atas pendidikan tinggi','Hak untuk mendirikan partai'],
-      answer: 0,
-      explain: 'Pasal 27 ayat (2) UUD NRI 1945 menjamin hak atas pekerjaan dan penghidupan yang layak.'
-    },
-    {
-      case: 'Seorang warga negara aktif menggunakan hak pilihnya dan membayar pajak tepat waktu. Namun ia juga rajin menyebarkan ujaran kebencian terhadap kelompok tertentu.',
-      q: 'Analisis yang PALING tepat mengenai warga tersebut adalah...',
-      options: ['Ia sudah melaksanakan semua hak dan kewajiban sebagai warga negara','Ia melaksanakan sebagian hak dan kewajiban, namun masih mengingkari kewajiban menghormati hak orang lain','Ia hanya melanggar kewajiban pajak','Ia belum memiliki kesadaran hukum sama sekali'],
-      answer: 1,
-      explain: 'Warga negara harus menyeimbangkan hak dan kewajiban. Menyebar ujaran kebencian melanggar hak orang lain (Pasal 28J ayat 1).'
-    }
-  ];
+function setStage(s) {
+  stage = Math.max(0, Math.min(10, s));
+  updateFallbackPlant();
 
-  /* ============ STATE ============ */
-  let currentQ = 0;
-  let stage = 0;
-  let wrongAttemptsThisRun = 0;
-  let locked = false;
-  let threeInitialized = false;
-  let gameActive = false;
-  let THREE_AVAILABLE = (typeof THREE !== 'undefined');
+  if (!stem) return;
+  stemTargetH = Math.max(0.1, (stage/10) * MAX_STEM);
 
-  /* ============ HELPERS ============ */
-  function $(id) { return document.getElementById(id); }
+  leaves.forEach(function(lf, i) {
+    var appearAt = i + 1;
+    lf.userData.targetScale = (stage >= appearAt) ? 1 : 0;
+  });
 
-  function showScreen(id) {
-    console.log('[GYR] showScreen:', id);
-    document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
-    const el = $(id);
-    if (el) el.classList.add('active');
-  }
-
-  function showToast(msg, type) {
-    type = type || 'info';
-    const t = $('toast');
-    if (!t) return;
-    t.textContent = msg;
-    t.className = 'show ' + type;
-    clearTimeout(t._timer);
-    t._timer = setTimeout(function() { t.className = ''; }, 1800);
-  }
-
-  /* ============ THREE.JS ============ */
-  let scene, camera, renderer, plantGroup;
-  let stem, leaves = [], flower, fruit;
-  let stemTargetHeight = 0.1;
-  let animTime = 0;
-  let shakeUntil = 0;
-  const MAX_STEM_H = 1.7;
-  const NUM_LEAVES = 7;
-
-  function initThree() {
-    if (!THREE_AVAILABLE) {
-      console.warn('THREE tidak tersedia, lewati WebGL');
-      return;
-    }
-    const container = $('canvas-container');
-    if (!container) return;
-    const w = container.clientWidth || 360;
-    const h = container.clientHeight || 260;
-
-    scene = new THREE.Scene();
-    scene.fog = new THREE.Fog(0x0a1a12, 7, 18);
-
-    camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 100);
-    camera.position.set(0, 2.3, 6.2);
-    camera.lookAt(0, 1.5, 0);
-
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(w, h);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    container.appendChild(renderer.domElement);
-
-    scene.add(new THREE.AmbientLight(0xffffff, 0.55));
-    const dirLight = new THREE.DirectionalLight(0xfff5e0, 0.95);
-    dirLight.position.set(3, 6, 4);
-    scene.add(dirLight);
-    const rimLight = new THREE.DirectionalLight(0x88ccff, 0.45);
-    rimLight.position.set(-4, 3, -3);
-    scene.add(rimLight);
-    const bottomLight = new THREE.PointLight(0x7ddc6a, 0.5, 8);
-    bottomLight.position.set(0, 0.5, 2);
-    scene.add(bottomLight);
-
-    buildPlant();
-    window.addEventListener('resize', onResize);
-    animate();
-  }
-
-  function buildPlant() {
-    plantGroup = new THREE.Group();
-    plantGroup.position.y = -0.55;
-
-    const potMat = new THREE.MeshStandardMaterial({ color: 0xc47a3a, roughness: 0.85 });
-    const pot = new THREE.Mesh(new THREE.CylinderGeometry(0.72, 0.52, 0.9, 32), potMat);
-    pot.position.y = 0.45;
-    plantGroup.add(pot);
-
-    const rimMat = new THREE.MeshStandardMaterial({ color: 0xa8622a, roughness: 0.85 });
-    const rim = new THREE.Mesh(new THREE.CylinderGeometry(0.76, 0.76, 0.13, 32), rimMat);
-    rim.position.y = 0.88;
-    plantGroup.add(rim);
-
-    const soilMat = new THREE.MeshStandardMaterial({ color: 0x3a2418, roughness: 1 });
-    const soil = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.7, 0.1, 32), soilMat);
-    soil.position.y = 0.96;
-    plantGroup.add(soil);
-
-    const stemMat = new THREE.MeshStandardMaterial({ color: 0x4a9b3f, roughness: 0.65 });
-    const stemGeo = new THREE.CylinderGeometry(0.05, 0.08, 1, 10);
-    stemGeo.translate(0, 0.5, 0);
-    stem = new THREE.Mesh(stemGeo, stemMat);
-    stem.position.y = 1.02;
-    stem.scale.y = 0.1;
-    plantGroup.add(stem);
-
-    for (let i = 0; i < NUM_LEAVES; i++) {
-      const leaf = createLeaf();
-      leaf.visible = false;
-      leaf.userData.targetScale = 0;
-      leaf.userData.currentScale = 0;
-      leaf.scale.setScalar(0.001);
-      const angle = i * 137.5 * Math.PI / 180;
-      leaf.rotation.y = angle;
-      leaf.rotation.z = -0.25;
-      plantGroup.add(leaf);
-      leaves.push(leaf);
-    }
-
-    flower = createFlower();
-    flower.visible = false;
+  if (stage >= 8) {
+    flower.userData.targetScale = (stage >= 9) ? 1 : 0.42;
+  } else {
     flower.userData.targetScale = 0;
-    flower.userData.currentScale = 0;
-    flower.scale.setScalar(0.001);
-    plantGroup.add(flower);
-
-    fruit = createFruit();
-    fruit.visible = false;
-    fruit.userData.targetScale = 0;
-    fruit.userData.currentScale = 0;
-    fruit.scale.setScalar(0.001);
-    plantGroup.add(fruit);
-
-    scene.add(plantGroup);
   }
 
-  function createLeaf() {
-    const g = new THREE.Group();
-    const mat = new THREE.MeshStandardMaterial({ color: 0x5fb84f, roughness: 0.55, side: THREE.DoubleSide });
-    const leaf = new THREE.Mesh(new THREE.SphereGeometry(0.25, 10, 7), mat);
-    leaf.scale.set(1.6, 0.13, 0.8);
-    leaf.position.x = 0.36;
-    g.add(leaf);
-    const veinMat = new THREE.MeshStandardMaterial({ color: 0x3d8c33 });
-    const vein = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.62, 5), veinMat);
-    vein.rotation.z = Math.PI / 2;
-    vein.position.set(0.36, 0.015, 0);
-    g.add(vein);
-    return g;
-  }
+  fruit.userData.targetScale = (stage >= 10) ? 1 : 0;
 
-  function createFlower() {
-    const g = new THREE.Group();
-    const petalMat = new THREE.MeshStandardMaterial({ color: 0xff6b9d, roughness: 0.45, emissive: 0x661133, emissiveIntensity: 0.35 });
-    const petalCount = 8;
-    for (let i = 0; i < petalCount; i++) {
-      const petal = new THREE.Mesh(new THREE.SphereGeometry(0.2, 9, 7), petalMat);
-      petal.scale.set(1, 0.32, 0.62);
-      const a = (i / petalCount) * Math.PI * 2;
-      petal.position.set(Math.cos(a) * 0.22, 0, Math.sin(a) * 0.22);
-      petal.rotation.y = -a;
-      g.add(petal);
-    }
-    const centerMat = new THREE.MeshStandardMaterial({ color: 0xffd54f, emissive: 0xaa7700, emissiveIntensity: 0.7 });
-    const center = new THREE.Mesh(new THREE.SphereGeometry(0.12, 14, 14), centerMat);
-    g.add(center);
-    const glowMat = new THREE.MeshBasicMaterial({ color: 0xffd54f, transparent: true, opacity: 0.18 });
-    const glow = new THREE.Mesh(new THREE.SphereGeometry(0.35, 16, 16), glowMat);
-    g.add(glow);
-    return g;
-  }
+  log('stage=' + stage);
+}
 
-  function createFruit() {
-    const g = new THREE.Group();
-    const mat = new THREE.MeshStandardMaterial({ color: 0xff3b30, roughness: 0.35, emissive: 0x550000, emissiveIntensity: 0.25 });
-    const body = new THREE.Mesh(new THREE.SphereGeometry(0.21, 18, 18), mat);
-    body.scale.y = 1.08;
-    g.add(body);
-    const hiMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.35 });
-    const hi = new THREE.Mesh(new THREE.SphereGeometry(0.06, 8, 8), hiMat);
-    hi.position.set(-0.07, 0.09, 0.12);
-    g.add(hi);
-    const leafMat = new THREE.MeshStandardMaterial({ color: 0x4a9b3f, side: THREE.DoubleSide });
-    const lf = new THREE.Mesh(new THREE.SphereGeometry(0.09, 8, 6), leafMat);
-    lf.scale.set(1.6, 0.18, 0.7);
-    lf.position.y = 0.22;
-    g.add(lf);
-    return g;
-  }
+var FALLBACK_EMOJIS = ['🌱','🌱','🌿','🌿','🍀','🍀','🌾','🌾','🌸','🌻','🍎'];
+function updateFallbackPlant() {
+  var fb = $('fallback-plant');
+  var em = $('fallback-emoji');
+  if (!fb || !em) return;
+  if (THREE_OK && threeReady) { fb.classList.remove('show'); return; }
+  fb.classList.add('show');
+  em.textContent = FALLBACK_EMOJIS[stage] || '🌱';
+  em.style.transform = 'scale(' + (0.7 + stage*0.06) + ')';
+}
 
-  function setStage(newStage) {
-    stage = Math.max(0, Math.min(10, newStage));
-    if (!stem) return;
-    const t = stage / 10;
-    stemTargetHeight = Math.max(0.1, t * MAX_STEM_H);
-
-    leaves.forEach(function(leaf, i) {
-      const appearAt = i + 1;
-      if (stage >= appearAt) {
-        leaf.visible = true;
-        leaf.userData.targetScale = 1;
-      } else {
-        leaf.userData.targetScale = 0;
-      }
-    });
-
-    if (stage >= 8) {
-      flower.visible = true;
-      flower.userData.targetScale = stage >= 9 ? 1 : 0.42;
-    } else {
-      flower.userData.targetScale = 0;
-    }
-
-    if (stage >= 10) {
-      fruit.visible = true;
-      fruit.userData.targetScale = 1;
-    } else {
-      fruit.userData.targetScale = 0;
-    }
-  }
-
-  function resetPlantInstant() {
-    if (!stem) return;
+function resetPlantInstant() {
+  if (stem) {
     stem.scale.y = 0.1;
-    stemTargetHeight = 0.1;
-    leaves.forEach(function(l) {
-      l.visible = false;
-      l.userData.currentScale = 0;
-      l.userData.targetScale = 0;
-      l.scale.setScalar(0.001);
-    });
-    if (flower) {
-      flower.visible = false;
-      flower.userData.currentScale = 0;
-      flower.userData.targetScale = 0;
-      flower.scale.setScalar(0.001);
-    }
-    if (fruit) {
-      fruit.visible = false;
-      fruit.userData.currentScale = 0;
-      fruit.userData.targetScale = 0;
-      fruit.scale.setScalar(0.001);
-    }
+    stemTargetH = 0.1;
+  }
+  leaves.forEach(function(lf) {
+    lf.visible = false;
+    lf.userData.currentScale = 0;
+    lf.userData.targetScale = 0;
+    lf.scale.setScalar(0.001);
+  });
+  if (flower) {
+    flower.visible = false;
+    flower.userData.currentScale = 0;
+    flower.userData.targetScale = 0;
+    flower.scale.setScalar(0.001);
+  }
+  if (fruit) {
+    fruit.visible = false;
+    fruit.userData.currentScale = 0;
+    fruit.userData.targetScale = 0;
+    fruit.scale.setScalar(0.001);
+  }
+}
+
+function shakePlant() { shakeUntil = performance.now() + 480; }
+
+function animate() {
+  requestAnimationFrame(animate);
+  animT += 0.016;
+  if (!stem || !renderer) return;
+
+  var cur = stem.scale.y;
+  stem.scale.y = cur + (stemTargetH - cur) * 0.09;
+  var stemH = stem.scale.y;
+
+  leaves.forEach(function(lf, i) {
+    var tgt = lf.userData.targetScale;
+    lf.userData.currentScale += (tgt - lf.userData.currentScale) * 0.1;
+    var s = lf.userData.currentScale;
+    if (s < 0.01) { lf.visible = false; }
+    else { lf.visible = true; lf.scale.setScalar(s); }
+    lf.position.y = 1.02 + stemH * ((i+1)/(NLEAF+1.2));
+    lf.rotation.z = -0.25 + Math.sin(animT*1.4 + i*1.7) * 0.05 * s;
+  });
+
+  flower.userData.currentScale += (flower.userData.targetScale - flower.userData.currentScale) * 0.1;
+  var fs = flower.userData.currentScale;
+  flower.visible = fs >= 0.01;
+  if (flower.visible) flower.scale.setScalar(fs);
+  flower.position.y = 1.02 + stemH;
+  flower.rotation.y += 0.012;
+
+  fruit.userData.currentScale += (fruit.userData.targetScale - fruit.userData.currentScale) * 0.1;
+  var frs = fruit.userData.currentScale;
+  fruit.visible = frs >= 0.01;
+  if (fruit.visible) fruit.scale.setScalar(frs);
+  fruit.position.y = 1.02 + stemH - 0.42;
+  fruit.position.x = Math.sin(animT*0.6) * 0.03;
+
+  plantGroup.rotation.y = Math.sin(animT*0.28) * 0.08;
+  if (performance.now() < shakeUntil) {
+    plantGroup.position.x = (Math.random()-0.5) * 0.14;
+  } else {
+    plantGroup.position.x *= 0.85;
   }
 
-  function shakePlant() { shakeUntil = performance.now() + 480; }
+  var camY = 2.0 + stemH*0.45;
+  camera.position.y += (camY - camera.position.y) * 0.04;
+  camera.lookAt(0, 1.1 + stemH*0.55, 0);
 
-  function animate() {
-    requestAnimationFrame(animate);
-    animTime += 0.016;
-    if (!stem || !renderer) return;
+  renderer.render(scene, camera);
+}
 
-    const curH = stem.scale.y;
-    stem.scale.y = curH + (stemTargetHeight - curH) * 0.09;
-    const stemH = stem.scale.y;
+function onResize() {
+  if (!renderer || !camera) return;
+  var c = $('canvas-container'); if (!c) return;
+  var w = c.clientWidth, h = c.clientHeight;
+  if (!w || !h) return;
+  camera.aspect = w/h;
+  camera.updateProjectionMatrix();
+  renderer.setSize(w, h);
+}
 
-    leaves.forEach(function(leaf, i) {
-      const target = leaf.userData.targetScale;
-      leaf.userData.currentScale += (target - leaf.userData.currentScale) * 0.1;
-      const s = leaf.userData.currentScale;
-      if (s < 0.01) { leaf.visible = false; }
-      else { leaf.visible = true; leaf.scale.setScalar(s); }
-      const baseY = 1.02;
-      leaf.position.y = baseY + stemH * ((i + 1) / (NUM_LEAVES + 1.2));
-      leaf.rotation.z = -0.25 + Math.sin(animTime * 1.4 + i * 1.7) * 0.05 * s;
-    });
+/* ===== GAME LOGIC ===== */
+function updateHUD() {
+  var p = $('q-progress'), f = $('hud-fill');
+  if (p) p.textContent = 'Soal ' + (currentQ+1) + ' / ' + QUESTIONS.length;
+  if (f) f.style.width = (stage / QUESTIONS.length * 100) + '%';
+}
 
-    flower.userData.currentScale += (flower.userData.targetScale - flower.userData.currentScale) * 0.1;
-    const fs = flower.userData.currentScale;
-    if (fs < 0.01) { flower.visible = false; }
-    else { flower.visible = true; flower.scale.setScalar(fs); }
-    flower.position.y = 1.02 + stemH;
-    flower.rotation.y += 0.012;
+function loadQuestion() {
+  var q = QUESTIONS[currentQ];
+  if (!q) { finishQuiz(); return; }
+  $('case-text').textContent = q.case;
+  $('question-text').textContent = q.q;
+  var ex = $('explain-box');
+  ex.classList.remove('show');
+  ex.textContent = '';
 
-    fruit.userData.currentScale += (fruit.userData.targetScale - fruit.userData.currentScale) * 0.1;
-    const frs = fruit.userData.currentScale;
-    if (frs < 0.01) { fruit.visible = false; }
-    else { fruit.visible = true; fruit.scale.setScalar(frs); }
-    fruit.position.y = 1.02 + stemH - 0.42;
-    fruit.position.x = Math.sin(animTime * 0.6) * 0.03;
+  var opts = $('options');
+  opts.innerHTML = '';
+  q.options.forEach(function(txt, i) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'option';
+    var ltr = document.createElement('span');
+    ltr.className = 'opt-letter';
+    ltr.textContent = String.fromCharCode(65 + i);
+    var s = document.createElement('span');
+    s.textContent = txt;
+    btn.appendChild(ltr);
+    btn.appendChild(s);
+    btn.addEventListener('click', function() { checkAnswer(i, btn); });
+    opts.appendChild(btn);
+  });
 
-    plantGroup.rotation.y = Math.sin(animTime * 0.28) * 0.08;
-    if (performance.now() < shakeUntil) {
-      plantGroup.position.x = (Math.random() - 0.5) * 0.14;
-    } else {
-      plantGroup.position.x *= 0.85;
-    }
+  locked = false;
+  updateHUD();
+}
 
-    const camTargetY = 2.0 + stemH * 0.45;
-    camera.position.y += (camTargetY - camera.position.y) * 0.04;
-    camera.lookAt(0, 1.1 + stemH * 0.55, 0);
+function checkAnswer(idx, btn) {
+  if (locked) return;
+  var q = QUESTIONS[currentQ];
+  if (idx === q.answer) {
+    locked = true;
+    btn.classList.add('correct');
+    var all = document.querySelectorAll('.option');
+    for (var i = 0; i < all.length; i++) all[i].disabled = true;
 
-    renderer.render(scene, camera);
-  }
-
-  function onResize() {
-    const container = $('canvas-container');
-    if (!container || !renderer || !camera) return;
-    const w = container.clientWidth;
-    const h = container.clientHeight;
-    if (!w || !h) return;
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-    renderer.setSize(w, h);
-  }
-
-  /* ============ GAME LOGIC ============ */
-  function startNewGame() {
-    console.log('[GYR] Mulai game baru');
-    currentQ = 0;
-    wrongAttemptsThisRun = 0;
-    locked = false;
-    gameActive = true;
-
-    resetPlantInstant();
-    setStage(0);
-
-    const ex = $('explain-box');
-    if (ex) { ex.classList.remove('show'); ex.textContent = ''; }
-
-    loadQuestion();
-    updateHUD();
-    showScreen('screen-quiz');
-
-    if (!threeInitialized && THREE_AVAILABLE) {
-      setTimeout(function() {
-        try {
-          initThree();
-          threeInitialized = true;
-        } catch (e) {
-          console.error('Three.js init failed:', e);
-          showToast('WebGL gagal, tapi kuis tetap jalan', 'info');
-        }
-      }, 80);
-    } else {
-      setTimeout(onResize, 60);
-    }
-  }
-
-  function updateHUD() {
-    const prog = $('q-progress');
-    const fill = $('hud-fill');
-    if (prog) prog.textContent = 'Soal ' + (currentQ + 1) + ' / ' + QUESTIONS.length;
-    if (fill) fill.style.width = ((stage) / QUESTIONS.length) * 100 + '%';
-  }
-
-  function loadQuestion() {
-    const q = QUESTIONS[currentQ];
-    $('case-text').textContent = q.case;
-    $('question-text').textContent = q.q;
-    const ex = $('explain-box');
-    ex.classList.remove('show');
-    ex.textContent = '';
-
-    const opts = $('options');
-    opts.innerHTML = '';
-    q.options.forEach(function(optText, i) {
-      const btn = document.createElement('button');
-      btn.className = 'option';
-      btn.type = 'button';
-      const letter = document.createElement('span');
-      letter.className = 'opt-letter';
-      letter.textContent = String.fromCharCode(65 + i);
-      const txt = document.createElement('span');
-      txt.textContent = optText;
-      btn.appendChild(letter);
-      btn.appendChild(txt);
-      btn.addEventListener('click', function() { checkAnswer(i, btn); });
-      opts.appendChild(btn);
-    });
-
-    locked = false;
-    updateHUD();
-  }
-
-  function checkAnswer(idx, btn) {
-    if (locked) return;
-    const q = QUESTIONS[currentQ];
-
-    if (idx === q.answer) {
-      locked = true;
-      btn.classList.add('correct');
-      document.querySelectorAll('.option').forEach(function(o) { o.disabled = true; });
-
-      setStage(stage + 1);
-      userData.totalCorrect++;
-      saveData();
-
-      showToast('✅ Benar! Tanamanmu tumbuh! 🌱', 'success');
-
-      const ex = $('explain-box');
-      ex.textContent = '💡 ' + q.explain;
-      ex.classList.add('show');
-
-      setTimeout(function() {
-        currentQ++;
-        if (currentQ >= QUESTIONS.length) {
-          finishQuiz();
-        } else {
-          loadQuestion();
-        }
-      }, 1700);
-    } else {
-      btn.classList.add('wrong');
-      btn.disabled = true;
-      wrongAttemptsThisRun++;
-      userData.totalWrong++;
-      saveData();
-      shakePlant();
-      showToast('❌ Salah! Tanaman tidak tumbuh. Coba lagi!', 'error');
-    }
-  }
-
-  function finishQuiz() {
-    gameActive = false;
-    setStage(10);
-
-    const badge = {
-      id: 'badge_plant_' + Date.now(),
-      name: 'Penumbuh Tanaman',
-      icon: '🌻',
-      desc: 'Berhasil menumbuhkan tanaman hingga berbunga & berbuah',
-      earnedAt: new Date().toISOString(),
-      wrongAttempts: wrongAttemptsThisRun
-    };
-    userData.badges.push(badge);
-    userData.plantsGrown++;
-    userData.history.push({
-      date: badge.earnedAt,
-      wrongAttempts: wrongAttemptsThisRun,
-      totalQuestions: QUESTIONS.length
-    });
+    setStage(stage + 1);
+    userData.totalCorrect++;
     saveData();
+    showToast('✅ Benar! Tanamanmu tumbuh! 🌱', 'success');
 
-    setTimeout(function() { showBadgeScreen(badge); }, 1400);
+    var ex = $('explain-box');
+    ex.textContent = '💡 ' + q.explain;
+    ex.classList.add('show');
+
+    setTimeout(function() {
+      currentQ++;
+      if (currentQ >= QUESTIONS.length) finishQuiz();
+      else loadQuestion();
+    }, 1700);
+  } else {
+    btn.classList.add('wrong');
+    btn.disabled = true;
+    wrongAttempts++;
+    userData.totalWrong++;
+    saveData();
+    shakePlant();
+    showToast('❌ Salah! Tanaman tidak tumbuh. Coba lagi!', 'error');
   }
+}
 
-  function showBadgeScreen(badge) {
+function finishQuiz() {
+  gameActive = false;
+  setStage(10);
+
+  var badge = {
+    id: 'badge_' + Date.now(),
+    name: 'Penumbuh Tanaman',
+    icon: '🌻',
+    desc: 'Berhasil menumbuhkan tanaman hingga berbunga & berbuah',
+    earnedAt: new Date().toISOString(),
+    wrongAttempts: wrongAttempts
+  };
+  userData.badges.push(badge);
+  userData.plantsGrown++;
+  userData.history.push({ date: badge.earnedAt, wrongAttempts: wrongAttempts, totalQuestions: QUESTIONS.length });
+  saveData();
+
+  setTimeout(function() {
     $('badge-name').textContent = badge.name;
     $('badge-desc').textContent =
       'Kamu berhasil menumbuhkan tanaman dari tunas hingga berbunga dan berbuah dengan menjawab ' +
       QUESTIONS.length + ' soal dengan benar!' +
-      (wrongAttemptsThisRun > 0
-        ? ' (Kesalahan: ' + wrongAttemptsThisRun + ' kali — terus semangat belajar!)'
+      (wrongAttempts > 0
+        ? ' (Kesalahan: ' + wrongAttempts + ' kali — terus semangat belajar!)'
         : ' (Tanpa kesalahan — luar biasa!)');
     $('badge-plants').textContent = userData.plantsGrown;
-    $('badge-wrong').textContent = wrongAttemptsThisRun;
+    $('badge-wrong').textContent = wrongAttempts;
     $('badge-badges').textContent = userData.badges.length;
     showScreen('screen-badge');
-  }
+  }, 1400);
+}
 
-  function updateHomeStats() {
-    const el = $('home-stats');
-    if (!el) return;
-    el.innerHTML =
-      '<div class="stat">' +
-        '<div class="stat-val">' + userData.plantsGrown + '</div>' +
-        '<div class="stat-lbl">Tanaman Tumbuh</div>' +
-      '</div>' +
-      '<div class="stat">' +
-        '<div class="stat-val">' + userData.badges.length + '</div>' +
-        '<div class="stat-lbl">Badge</div>' +
-      '</div>';
-  }
+function updateHomeStats() {
+  var el = $('home-stats');
+  if (!el) return;
+  el.innerHTML =
+    '<div class="stat"><div class="stat-val">' + userData.plantsGrown + '</div><div class="stat-lbl">Tanaman Tumbuh</div></div>' +
+    '<div class="stat"><div class="stat-val">' + userData.badges.length + '</div><div class="stat-lbl">Badge</div></div>';
+}
 
-  function resetProgress() {
-    if (!confirm('Yakin ingin menghapus semua progress?')) return;
-    userData = JSON.parse(JSON.stringify(DEFAULT_DATA));
-    saveData();
-    updateHomeStats();
-    showToast('Progress berhasil direset', 'info');
-  }
-
-  function goHome() {
-    showScreen('screen-home');
-    updateHomeStats();
-    resetPlantInstant();
-    setStage(0);
-  }
-
-  /* ============ EXPOSE KE WINDOW (untuk onclick backup) ============ */
-  window.__goMaterial = function() {
-    console.log('[GYR] Klik Mulai');
-    showScreen('screen-material');
-  };
-  window.__startGame = function() {
-    console.log('[GYR] Klik Mulai Kuis');
-    startNewGame();
-  };
-  window.__goHome = function() {
-    console.log('[GYR] Klik Kembali ke Home');
-    goHome();
-  };
-  window.__resetProgress = function() {
-    console.log('[GYR] Klik Reset');
-    resetProgress();
-  };
-
-  /* ============ EVENT LISTENERS (addEventListener sebagai backup) ============ */
-  const btnStart = $('btn-start');
-  const btnReset = $('btn-reset');
-  const btnToQuiz = $('btn-to-quiz');
-  const btnHome = $('btn-home');
-
-  if (btnStart) btnStart.addEventListener('click', function(e) {
-    // onclick sudah handle, ini cuma backup
-    console.log('[GYR] btnStart addEventListener fired');
-  });
-  if (btnReset) btnReset.addEventListener('click', function(e) {
-    console.log('[GYR] btnReset addEventListener fired');
-  });
-  if (btnToQuiz) btnToQuiz.addEventListener('click', function(e) {
-    console.log('[GYR] btnToQuiz addEventListener fired');
-  });
-  if (btnHome) btnHome.addEventListener('click', function(e) {
-    console.log('[GYR] btnHome addEventListener fired');
-  });
-
-  /* ============ INIT ============ */
+/* ===== ACTIONS ===== */
+function goHome() {
+  showScreen('screen-home');
   updateHomeStats();
-  console.log('[GYR] Inisialisasi selesai. THREE available:', THREE_AVAILABLE);
+  resetPlantInstant();
+  setStage(0);
+}
+
+function goMaterial() {
+  showScreen('screen-material');
+}
+
+function startGame() {
+  log('startGame dipanggil');
+  currentQ = 0;
+  wrongAttempts = 0;
+  locked = false;
+  gameActive = true;
+  resetPlantInstant();
+  setStage(0);
+
+  var ex = $('explain-box');
+  ex.classList.remove('show');
+  ex.textContent = '';
+
+  loadQuestion();
+  updateHUD();
+  showScreen('screen-quiz');
+
+  // Inisialisasi Three.js setelah screen tampil (agar canvas punya ukuran)
+  if (!threeReady) {
+    setTimeout(function() {
+      safe(function() {
+        var ok = initThree();
+        threeReady = ok;
+        updateFallbackPlant();
+      }, 'initThree');
+      setTimeout(onResize, 200);
+    }, 120);
+  } else {
+    setTimeout(onResize, 100);
+  }
+}
+
+function resetProgress() {
+  if (!confirm('Yakin ingin menghapus semua progress?')) return;
+  userData = JSON.parse(JSON.stringify(DEFAULT_DATA));
+  saveData();
+  updateHomeStats();
+  showToast('Progress berhasil direset', 'info');
+}
+
+/* ===== BIND BUTTONS (double safety) ===== */
+function bindBtn(id, fn) {
+  var el = $(id);
+  if (!el) { log('btn tidak ditemukan: ' + id); return; }
+  // addEventListener
+  el.addEventListener('click', function(e) {
+    e.preventDefault();
+    log('click: ' + id);
+    safe(fn, id);
+  });
+  // onclick sebagai backup (kalau addEventListener gagal)
+  el.onclick = function(e) {
+    // jangan double fire
+  };
+}
+
+/* ===== BOOT ===== */
+function boot() {
+  debugEl = $('debug-log');
+  if (debugEl) debugEl.classList.add('show');
+
+  $('debug-toggle').addEventListener('click', function() {
+    debugVisible = !debugVisible;
+    if (debugEl) debugEl.classList.toggle('show', debugVisible);
+  });
+  debugVisible = true;
+
+  log('BOOT: THREE=' + (THREE_OK ? 'ok' : 'no'));
+
+  userData = loadData();
+  updateHomeStats();
+
+  bindBtn('btn-start', goMaterial);
+  bindBtn('btn-reset', resetProgress);
+  bindBtn('btn-to-quiz', startGame);
+  bindBtn('btn-home', goHome);
+
+  log('Semua tombol terikat');
+}
+
+/* ===== START ===== */
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', boot);
+} else {
+  boot();
+}
+
+// Tangkap error global
+window.addEventListener('error', function(e) {
+  log('GLOBAL ERR: ' + (e.message || 'unknown') + ' @ ' + (e.lineno || '?'));
 });
+
+})();
 </script>
 
 </body>
